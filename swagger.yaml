@@ -1,0 +1,145 @@
+---
+swagger: "2.0"
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Factura Service
+  contact:
+    email: gebejaranod@unal.edu.co
+host: virtserver.swaggerhub.com
+basePath: /gebejaranod/Mensageria/1.0.0
+tags:
+- name: user
+  description: el usuario puede ver sus facturas
+schemes:
+- https
+- http
+paths:
+  /factura:
+    get:
+      tags:
+      - user
+      summary: lista de facturas
+      description: |
+        Devuelve la lista de todas los registros guardados
+      operationId: searchInventory
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Devuelbe la lista con todos los registros
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Factura'
+        "400":
+          description: Error en los parametros de entrada
+    post:
+      tags:
+      - user
+      summary: Crear nuevo registro de Factura
+      description: Crear nuevo registro en la tabla factura
+      operationId: addFactura
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: nuevoRegistro
+        description: Nuevo registro para crear
+        required: false
+        schema:
+          $ref: '#/definitions/Factura'
+      responses:
+        "201":
+          description: registro creado
+        "400":
+          description: Datos de entrada invalidos
+  /factura/id:
+    get:
+      tags:
+      - user
+      summary: lista de facturas
+      description: |
+        Devuelve el registro con el id correspondiente
+      operationId: ObtenerItem
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Devuelve el item correspondiente al id
+          schema:
+            type: object
+        "400":
+          description: Error en los parametros de entrada
+    put:
+      tags:
+      - user
+      summary: Actualizar registro de Factura
+      description: Actualizar registro en la tabla factura
+      operationId: UpdateFactura
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: nuevoRegistro
+        description: registro para actualizar
+        required: false
+        schema:
+          $ref: '#/definitions/Factura'
+      responses:
+        "201":
+          description: registro actualizado
+        "400":
+          description: Datos de entrada invalidos
+    delete:
+      tags:
+      - user
+      summary: Borrar registro de Factura
+      description: Eliminar registro en la tabla factura
+      operationId: DeleteFactura
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: eliminarRegistro
+        description: registro para eliminar
+        required: false
+        schema:
+          $ref: '#/definitions/Factura'
+      responses:
+        "201":
+          description: registro eliminado
+        "400":
+          description: Datos de entrada invalidos
+definitions:
+  Factura:
+    type: object
+    required:
+    - costo_total
+    - id
+    - impuesto_IVA
+    - pedido_id
+    properties:
+      id:
+        type: integer
+        format: uuid
+        example: 32165
+      pedido_id:
+        type: integer
+        example: 68452316
+      costo_total:
+        type: integer
+        format: uuid
+        example: 500000
+      impuesto_IVA:
+        type: integer
+        format: uuid
+        example: 18
